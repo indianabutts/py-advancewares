@@ -6,7 +6,7 @@ from states.GameState import GameState
 
 vec = pygame.Vector2
 
-class SokobanGame:
+class CoreGame:
     SCREEN_WIDTH, SCREEN_HEIGHT = 512, 512
     SCREEN_SCALE = 2
 

@@ -1,8 +1,8 @@
 from os import listdir
 from os.path import isfile
 
-from entities.Player import Player
-from entities.Tile import *
+from entities.BattleEntities.Player import Player
+from entities.BattleEntities.Tile import *
 
 vec = pygame.Vector2
 
