@@ -1,7 +1,3 @@
-import sys
-
-import pygame
-from pygame.locals import *
 from core.CoreGame import CoreGame
 
 if __name__ == "__main__":

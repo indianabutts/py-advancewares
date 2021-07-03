@@ -13,5 +13,3 @@ class PlayerCursor:
 
     def move(self, grid_position):
         self.grid_position = grid_position
-        # self.position += grid_position * 16
-        print("Cursor Moved to {}".format(self.grid_position))

@@ -2,9 +2,11 @@ import pygame
 import random
 
 from core.statemachine import AbstractState
+from entities.BattleEntities.Movement import WalkingMovement
 from entities.BattleEntities.Player import PlayerCursor
 from entities.BattleEntities.Entity import Unit
 from entities.BattleMap.Map import Map, MapTile, Terrain
+from renderables.MapRenderer import MapRenderer
 
 vec = pygame.Vector2
 
@@ -25,15 +27,8 @@ class GameState(AbstractState):
         self.screen_size = self.state_machine.get_data("SCREEN_SIZE")
         self.player_cursor = PlayerCursor(vec(0, 0))
         self.current_location = vec(0, 0)
-        self.map = Map()
-        testUnit = Unit("Infantry", vec(0, 0), 10, 3, 99, 1, 0)
-
-        for y in range(10):
-            for x in range(10):
-                tile = MapTile(vec(x, y), random.choice(list(Terrain)))
-                if y == 4 and x == 4:
-                    tile.add_entity(testUnit)
-                self.map.add_tile(tile)
+        self.map = MapRenderer("test.map")
+        self.surfaces.append({"surface": self.map.surface, "position":None})
 
     def handle_events(self, events):
         self.input_vector = vec(0, 0)
@@ -55,10 +50,10 @@ class GameState(AbstractState):
             if self.selected_tile is not None:
                 self.current_location = test_location
                 print(
-                    "{} - {}".format(
+                    "{} - {} - {} Entities".format(
                         self.selected_tile.terrain_type,
                         self.selected_tile.grid_location,
+                        len(self.selected_tile.get_entities()),
                     )
                 )
-                print(len(self.selected_tile.entities))
                 self.player_cursor.move(self.current_location)
