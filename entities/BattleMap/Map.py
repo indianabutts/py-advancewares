@@ -8,9 +8,10 @@ vec = pygame.Vector2
 
 
 class Terrain(Enum):
-    GRASS = 1
+    DIRT = 1
     ROAD = 2
     OCEAN = 3
+    COAST = 4
 
 
 class MapTile:

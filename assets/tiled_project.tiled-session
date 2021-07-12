@@ -1,0 +1,65 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "levels/test.tmx",
+    "expandedProjectPaths": [
+        "tilesets",
+        "levels"
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "levels/base.tmx": {
+            "scale": 2.3495535714285714,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": -9.789093672810184,
+                "y": 38.517955538666165
+            }
+        },
+        "levels/test.tmx": {
+            "scale": 2,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 152.5,
+                "y": 62
+            }
+        },
+        "tilesets/Revolution.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 4
+        }
+    },
+    "last.exportedFilePath": "/home/yassir/dev/py-advancewars/assets/levels",
+    "last.imagePath": "/home/yassir/dev/py-advancewars/assets/tilesets",
+    "map.fixedSize": true,
+    "map.height": 20,
+    "map.lastUsedExportFilter": "JSON map files (*.json)",
+    "map.lastUsedFormat": "tmx",
+    "map.layerDataFormat": null,
+    "map.orientation": 1,
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "map.width": 20,
+    "openFiles": [
+        "levels/test.tmx"
+    ],
+    "project": "tiled_project.tiled-project",
+    "recentFiles": [
+        "levels/test.tmx",
+        "levels/base.tmx",
+        "tilesets/Revolution.tsx"
+    ],
+    "tileset.embedInMap": false,
+    "tileset.lastUsedFilter": "Tiled tileset files (*.tsx *.xml)",
+    "tileset.margin": 0,
+    "tileset.spacing": 0,
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    },
+    "tileset.transparentColor": "#ff00ff",
+    "tileset.type": 0,
+    "tileset.useTransparentColor": false
+}
