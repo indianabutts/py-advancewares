@@ -9,7 +9,7 @@ from entities.BattleMap.Map import Map, MapTile, Terrain
 from renderables.MapRenderer import MapRenderer
 
 vec = pygame.Vector2
-
+from pytmx import load_pygame
 
 class GameState(AbstractState):
     def __init__(self, state_machine):
@@ -25,10 +25,13 @@ class GameState(AbstractState):
     def enter(self, persisted_data, current_time):
         super().enter(persisted_data, current_time)
         self.screen_size = self.state_machine.get_data("SCREEN_SIZE")
-        self.player_cursor = PlayerCursor(vec(0, 0))
         self.current_location = vec(0, 0)
         self.map = MapRenderer("test.map")
-        self.surfaces.append({"surface": self.map.surface, "position":None})
+        self.player_cursor = PlayerCursor(vec(0,0),self.map.tilesize)
+
+        self.player_cursor_surface = pygame.Surface(self.map.tilesize)
+        pygame.draw.rect(self.player_cursor_surface,(255,0,0), pygame.Rect(0,0,self.map.tilesize.x,self.map.tilesize.y))
+
 
     def handle_events(self, events):
         self.input_vector = vec(0, 0)
@@ -44,6 +47,10 @@ class GameState(AbstractState):
                     self.input_vector = vec(0, 1)
 
     def update(self, current_time):
+        self.surfaces = []
+        self.surfaces.append({"surface": self.map.surface, "position":vec(0,0)})
+        self.surfaces.append({"surface": self.player_cursor.surface, "position": self.player_cursor.world_position})
+
         if not self.input_vector == vec(0, 0):
             test_location = self.current_location + self.input_vector
             self.selected_tile = self.map.check_target_location(test_location)

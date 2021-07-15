@@ -7,7 +7,7 @@ from states.GameState import GameState
 vec = pygame.Vector2
 
 class CoreGame:
-    SCREEN_WIDTH, SCREEN_HEIGHT = 512, 512
+    SCREEN_WIDTH, SCREEN_HEIGHT = 800, 600
     SCREEN_SCALE = 2
 
     def __init__(self):

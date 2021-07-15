@@ -12,6 +12,7 @@ class Terrain(Enum):
     ROAD = 2
     OCEAN = 3
     COAST = 4
+    GRASS = 5
 
 
 class MapTile:

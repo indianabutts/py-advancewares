@@ -35,24 +35,32 @@ class Renderer(metaclass=ABCMeta):
 class MapRenderer(Renderer):
     def __init__(self, filename):
         self.filename = filename
-        self.map_data = self._parse_level_file(self.filename)
-        self.map = self._parse_level_file(self.filename)
-        super().__init__()
+        self.tile_sprites = {}
+        self.tileset = None
+        self.map, self.tilesize = self._parse_level_file(self.filename)
+        self.tileset_atlas = pygame.image.load(self.tileset)
+        super().__init__(self.tilesize.x*self.map.width,self.tilesize.y*self.map.height)
+        pass
 
     def _parse_level_file(self, filename):
-        map = Map()
         tiled_map = pytmx.TiledMap("assets/levels/test.tmx")
+        map = Map()
         for layer in tiled_map.layers:
             terrain_type = Terrain[layer.name.upper()]
             for x, y, image in layer.tiles():
-                print((x, y))
+                map_tile = MapTile(vec(x,y),terrain_type)
+                map.add_tile(map_tile)
+                if self.tileset is None:
+                    self.tileset = image[0]
+                self.tile_sprites[(x*tiled_map.tilewidth,y*tiled_map.tileheight)] = image
+
 
         # for y in range(10):
         #     for x in range(27):
         #         tile = MapTile(vec(x, y), random.choice(list(Terrain)))
         #         print(tile.terrain_type)
         #         map.add_tile(tile)
-        return map
+        return map, vec(tiled_map.tilewidth,tiled_map.tileheight)
 
     def get_width(self):
         return self.map.width
@@ -61,15 +69,15 @@ class MapRenderer(Renderer):
         return self.map.height
 
     def _build_surface(self):
-        for tile in self.map.get_tiles():
-            color = None
-            if tile.terrain_type == Terrain.GRASS:
-                color = (0,255,0)
-            elif tile.terrain_type == Terrain.ROAD:
-                color = (125,125,125)
-            else:
-                color = (0,0,255)
-            pygame.draw.rect(self.surface,color,(tile.grid_location.x*32,tile.grid_location.y*32,self.surface_size.x,self.surface_size.y))
+        for pos, image in self.tile_sprites.items():
+            if not self.tileset == image[0]:
+                self.tileset = image[0]
+                self.tileset_atlas = pygame.image.load(self.tileset)
+            rect = pygame.Rect(image[1][0],image[1][1],image[1][2],image[1][3])
+            flags = image[2]
+            blitimage = pygame.Surface(rect.size).convert()
+            blitimage.blit(self.tileset_atlas.convert(),(0,0), rect)
+            self.surface.blit(pygame.transform.flip(blitimage,flags.flipped_horizontally, flags.flipped_vertically),pos)
 
     def check_target_location(self, grid_location):
         return self.map.check_target_location(grid_location)
