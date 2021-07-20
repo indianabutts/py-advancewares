@@ -54,17 +54,17 @@ class CoreGame:
 
     def _render(self):
         self.screen.fill((255, 255, 255))
+        rendered = {}
         for renderable in self.state_machine.current_state.surfaces:
             position = (
-                self._center_on_screen(self.screen, renderable["surface"])
-                if renderable["position"] is None
-                else renderable["position"]
+                self._center_on_screen(self.screen, renderable.surface)
+                if renderable.position is None
+                else renderable.position
             )
-            self.screen.blit(renderable["surface"], position)
+            self.screen.blit(renderable.surface, position)
         self.window.blit(
             pygame.transform.scale(self.screen, self.window.get_size()), (0, 0)
         )
-
         pygame.display.flip()
 
     def _center_on_screen(self, screen, surface):

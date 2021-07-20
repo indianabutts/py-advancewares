@@ -1,6 +1,7 @@
 import pygame
 import random
 
+from core.GameSurface import GameSurface
 from core.statemachine import AbstractState
 from entities.BattleEntities.Movement import WalkingMovement
 from entities.BattleEntities.Player import PlayerCursor
@@ -48,19 +49,14 @@ class GameState(AbstractState):
 
     def update(self, current_time):
         self.surfaces = []
-        self.surfaces.append({"surface": self.map.surface, "position":vec(0,0)})
-        self.surfaces.append({"surface": self.player_cursor.surface, "position": self.player_cursor.world_position})
+        map_surface = GameSurface(surface= self.map.surface, position=vec(0,0))
+        self.surfaces.append(map_surface)
+        cursor_surface = GameSurface(surface = self.player_cursor.surface, position=self.player_cursor.world_position)
+        self.surfaces.append(cursor_surface)
 
         if not self.input_vector == vec(0, 0):
             test_location = self.current_location + self.input_vector
             self.selected_tile = self.map.check_target_location(test_location)
             if self.selected_tile is not None:
                 self.current_location = test_location
-                print(
-                    "{} - {} - {} Entities".format(
-                        self.selected_tile.terrain_type,
-                        self.selected_tile.grid_location,
-                        len(self.selected_tile.get_entities()),
-                    )
-                )
                 self.player_cursor.move(self.current_location)
